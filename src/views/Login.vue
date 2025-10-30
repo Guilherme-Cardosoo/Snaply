@@ -85,7 +85,6 @@ const register = () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 26px;
   background-color: #fff;
   color: #000;
   font-family: 'Poppins', sans-serif;

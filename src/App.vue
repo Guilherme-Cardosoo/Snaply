@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
+import FooterComponent from './components/FooterComponent.vue'
 import { useThemeStore } from './stores/theme'
 
 const route = useRoute()
@@ -12,6 +13,7 @@ themeStore.initTheme()
 <template>
   <HeaderComponent v-if="route.name !== 'Login' && route.name !== 'Profile'" />
   <router-view />
+  <FooterComponent v-if="route.name !== 'Login' && route.name !== 'Profile'" />
 </template>
 
 <style>

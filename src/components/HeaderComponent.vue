@@ -28,9 +28,6 @@ const selectedTheme = computed(() => themeStore.theme)
 
 <template>
   <header class="header">
-    <button class="new-post-btn">
-      <i class="fa-solid fa-plus" aria-hidden="true"></i>
-    </button>
 
     <h1 class="logo">Snaply</h1>
 
@@ -40,7 +37,6 @@ const selectedTheme = computed(() => themeStore.theme)
 
     <div class="side-menu" :class="{ 'side-menu--open': showMenu }">
       <ul v-if="!showThemes">
-        <li><router-link to="/profile" class="menu-link">Perfil</router-link></li>
         <li @click="openThemes" class="menu-link">Temas</li>
       </ul>
 
@@ -88,17 +84,6 @@ const selectedTheme = computed(() => themeStore.theme)
   background-color: var(--elements);
 }
 
-.new-post-btn {
-  position: absolute;
-  right: 365px;
-  top: 65%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--elements);
-  font-size: 2.4rem;
-}
-
 .logo {
   font-size: 2rem;
   font-weight: 800;
@@ -110,13 +95,13 @@ const selectedTheme = computed(() => themeStore.theme)
 
 .menu-btn {
   position: absolute;
-  left: 360px;
+  left: 330px;
   top: 65%;
   transform: translateY(-50%);
   background: none;
   border: none;
   color: var(--elements);
-  font-size: 2.4rem;
+  font-size: 2.1rem;
 }
 
 .side-menu {
