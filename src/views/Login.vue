@@ -1,26 +1,44 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import api from '@/api/api.js'
 
 const router = useRouter()
 
 const isSignUp = ref(false)
+const fullName = ref('')
+const username = ref('')
 const email = ref('')
 const password = ref('')
-const name = ref('')
 const confirmPassword = ref('')
 
-const login = () => {
-  if (!email.value || !password.value) {
+// 🔹 Função de login
+const login = async () => {
+  if (!username.value || !password.value) {
     alert('Preencha todos os campos!')
     return
   }
-  
-  router.push('/home')
+
+  try {
+    const res = await api.post('/token/', {
+      username: username.value,
+      password: password.value
+    })
+
+    localStorage.setItem('access', res.data.access)
+    localStorage.setItem('refresh', res.data.refresh)
+
+    alert('Login realizado com sucesso!')
+    router.push('/home')
+  } catch (err) {
+    console.error(err)
+    alert('Usuário ou senha incorretos!')
+  }
 }
 
-const register = () => {
-  if (!name.value || !email.value || !password.value || !confirmPassword.value) {
+// 🔹 Função de cadastro
+const register = async () => {
+  if (!fullName.value || !username.value || !email.value || !password.value || !confirmPassword.value) {
     alert('Preencha todos os campos!')
     return
   }
@@ -28,8 +46,25 @@ const register = () => {
     alert('As senhas não coincidem!')
     return
   }
-  alert(`Conta criada com sucesso!\nBem-vindo(a), ${name.value}!`)
-  isSignUp.value = false
+
+  try {
+    await api.post('/users/', {
+      first_name: fullName.value,
+      username: username.value,
+      email: email.value,
+      password: password.value
+})
+
+    alert(`Conta criada com sucesso!\nBem-vindo(a), ${fullName.value}!`)
+    isSignUp.value = false
+  } catch (err) {
+    console.error(err)
+    if (err.response?.status === 400 && err.response.data?.username) {
+      alert('Este nome de usuário já está em uso. Escolha outro.')
+    } else {
+      alert('Erro ao criar conta! Verifique os dados e tente novamente.')
+    }
+  }
 }
 </script>
 
@@ -38,13 +73,14 @@ const register = () => {
     <h1 class="social-logo">Snaply</h1>
 
     <transition name="fade-slide" mode="out-in">
+      <!-- 🔹 Tela de login -->
       <form
         v-if="!isSignUp"
         key="login"
         class="login-form"
         @submit.prevent="login"
       >
-        <input type="email" placeholder="Email:" v-model="email" required />
+        <input type="text" placeholder="Email:" v-model="username" required />
         <input type="password" placeholder="Senha:" v-model="password" required />
         <button type="submit">Entrar</button>
         <p class="signup-link">
@@ -53,13 +89,15 @@ const register = () => {
         </p>
       </form>
 
+      <!-- 🔹 Tela de cadastro -->
       <form
         v-else
         key="signup"
         class="login-form"
         @submit.prevent="register"
       >
-        <input type="text" placeholder="Nome completo:" v-model="name" required />
+        <input type="text" placeholder="Nome completo:" v-model="fullName" required />
+        <input type="text" placeholder="Nome de usuário:" v-model="username" required />
         <input type="email" placeholder="Email:" v-model="email" required />
         <input type="password" placeholder="Senha:" v-model="password" required />
         <input
