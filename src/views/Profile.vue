@@ -65,8 +65,8 @@ onMounted(async () => {
 
       <div class="profile-info">
         <div class="name-section">
-          <h2 class="name">{{ user.first_name || 'Usuário sem nome' }}</h2>
-          <button class="edit-btn">
+          <h2 class="name">{{ user.first_name || 'Guilherme Cardoso' }}</h2>
+          <button class="edit-btn" @click="$router.push('/edit-profile')">
             <FontAwesomeIcon icon="pen" />
           </button>
         </div>
@@ -78,7 +78,7 @@ onMounted(async () => {
             <span class="number">{{ user.posts_count }}</span>
             <span class="label">Posts</span>
           </div>
-          <div class="stat">
+          <div class="stat middle">
             <span class="number">{{ user.followers_count }}</span>
             <span class="label">Seguidores</span>
           </div>
@@ -86,6 +86,9 @@ onMounted(async () => {
             <span class="number">{{ user.following_count }}</span>
             <span class="label">Seguindo</span>
           </div>
+        </div>
+        <div class="bio">
+          <span class="label">bio teste</span>
         </div>
       </div>
     </section>
@@ -118,7 +121,7 @@ onMounted(async () => {
   height: 100px;
   border-radius: 50%;
   border: 3px solid var(--elements);
-  margin-top: 50px;
+  margin-top: 60px;
   object-fit: cover;
 }
 
@@ -126,7 +129,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .edit-btn {
@@ -134,7 +137,7 @@ onMounted(async () => {
   border: none;
   color: var(--elements);
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   transition: transform 0.2s;
 }
 .edit-btn:hover {
@@ -143,14 +146,22 @@ onMounted(async () => {
 
 .stats {
   display: flex;
-  justify-content: space-around;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;  
 }
 
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
+} 
+
+.stat.middle {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  padding: 0 20px;
+  margin: 0 -15px;
 }
 
 .number {
@@ -159,7 +170,7 @@ onMounted(async () => {
 }
 
 .label {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: gray;
 }
 
@@ -175,7 +186,21 @@ onMounted(async () => {
 .username {
   font-size: 1rem;
   color: gray;
-  margin: 8px 0 17px;
+  margin: -13px 1px 30px;
+  position: relative;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.username::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 1px;
+  background-color: gray;
 }
 
 .loading,
@@ -184,4 +209,23 @@ onMounted(async () => {
   font-size: 1.2rem;
   color: gray;
 }
+
+.bio {
+  position: relative;
+  margin-top: 40px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.bio::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 1px;
+  background-color: gray;
+}
+
 </style>

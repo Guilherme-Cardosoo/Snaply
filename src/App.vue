@@ -5,15 +5,18 @@ import FooterComponent from './components/FooterComponent.vue'
 import { useThemeStore } from './stores/theme'
 
 const route = useRoute()
-
 const themeStore = useThemeStore()
 themeStore.initTheme()
 </script>
 
 <template>
-  <HeaderComponent v-if="route.name !== 'Login' && route.name !== 'Profile'" />
+  <HeaderComponent
+    v-if="!['login', 'profile'].includes(route.name?.toLowerCase?.() || '')"
+  />
   <router-view />
-  <FooterComponent v-if="route.name !== 'Login' && route.name !== 'Profile'" />
+  <FooterComponent
+    v-if="!['login', 'profile'].includes(route.name?.toLowerCase?.() || '')"
+  />
 </template>
 
 <style>
@@ -25,4 +28,3 @@ body {
   color: var(--elements);
 }
 </style>
-

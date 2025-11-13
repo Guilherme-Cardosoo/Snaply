@@ -1,10 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useThemeStore } from '../stores/theme'
 
 const showMenu = ref(false)
 const showThemes = ref(false)
 const themeStore = useThemeStore()
+const router = useRouter()
 
 function toggleMenu() {
   showMenu.value = !showMenu.value
@@ -24,6 +26,19 @@ function selectTheme(theme) {
 }
 
 const selectedTheme = computed(() => themeStore.theme)
+
+function logout() {
+  if (confirm('Deseja realmente sair da conta?')) {
+    localStorage.removeItem('access')
+    localStorage.removeItem('refresh')
+
+    showMenu.value = false
+
+    router.push('/').then(() => {
+      window.location.reload()
+    })
+  }
+}
 </script>
 
 <template>
@@ -37,8 +52,10 @@ const selectedTheme = computed(() => themeStore.theme)
 
     <div class="side-menu" :class="{ 'side-menu--open': showMenu }">
       <ul v-if="!showThemes">
-        <li @click="openThemes" class="menu-link">Temas</li>
+        <li class="menu-link" @click="openThemes" >Temas</li>
+        <li class="menu-link logout" @click="logout">Sair</li>
       </ul>
+      
 
       <ul v-else>
         <li class="back" @click="backToMainMenu">Voltar</li>

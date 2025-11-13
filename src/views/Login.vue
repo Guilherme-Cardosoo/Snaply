@@ -12,7 +12,6 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
-// 🔹 Função de login
 const login = async () => {
   if (!username.value || !password.value) {
     alert('Preencha todos os campos!')
@@ -36,7 +35,6 @@ const login = async () => {
   }
 }
 
-// 🔹 Função de cadastro
 const register = async () => {
   if (!fullName.value || !username.value || !email.value || !password.value || !confirmPassword.value) {
     alert('Preencha todos os campos!')
@@ -73,7 +71,6 @@ const register = async () => {
     <h1 class="social-logo">Snaply</h1>
 
     <transition name="fade-slide" mode="out-in">
-      <!-- 🔹 Tela de login -->
       <form
         v-if="!isSignUp"
         key="login"
