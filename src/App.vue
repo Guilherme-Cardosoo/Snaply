@@ -11,11 +11,13 @@ themeStore.initTheme()
 
 <template>
   <HeaderComponent
-    v-if="!['login', 'profile'].includes(route.name?.toLowerCase?.() || '')"
+    v-if="!['login', 'profile', 'editprofile', 'createpost'].includes(route.name?.toLowerCase?.() || '')"
   />
+
   <router-view />
+
   <FooterComponent
-    v-if="!['login', 'profile'].includes(route.name?.toLowerCase?.() || '')"
+    v-if="!['login', 'profile', 'editprofile', 'createpost'].includes(route.name?.toLowerCase?.() || '')"
   />
 </template>
 
@@ -28,3 +30,4 @@ body {
   color: var(--elements);
 }
 </style>
+

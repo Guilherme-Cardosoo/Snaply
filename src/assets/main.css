@@ -1,17 +1,23 @@
 .claro {
   --page: #fff;
   --elements: #00ff88;
+  --elements2: #067d45;
   --text: #000;
+  --text2: #fff;
 }
 
 .escuro {
   --page: #2c2c2c;
   --elements: #00ff88;
+  --elements2: #067d45;
   --text: #fff;
+  --text2: #fff;
 }
 
 .dark {
   --page: #000;
   --elements: #fff;
+  --elements2: #7b7b7b;
   --text: #fff;
+  --text2: #000;
 }

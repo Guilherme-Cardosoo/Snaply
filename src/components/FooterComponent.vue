@@ -22,14 +22,13 @@ function toggleNewPost() {
       <i v-else class="fa-solid fa-house"></i>
     </router-link>
 
-    <button
+    <router-link
+      to="/createpost"
       class="icon new-post"
-      :class="{ active: newPostActive }"
-      @click="toggleNewPost"
       aria-label="Novo post"
     >
       <i class="fa-solid fa-plus"></i>
-    </button>
+    </router-link>
 
     <router-link
       to="/messages"

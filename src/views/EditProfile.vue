@@ -49,7 +49,6 @@ const handleImageUpload = (e) => {
 }
 
 const saveChanges = async () => {
-  // Validação de senha
   if (user.value.password && user.value.password !== user.value.confirm_password) {
     alert('As senhas não coincidem!')
     return
@@ -83,9 +82,8 @@ const saveChanges = async () => {
 
 <template>
   <div class="edit-profile-page">
-    <!-- 🔙 Seta de voltar -->
     <button class="back-btn" @click="router.push('/profile')">
-      <FontAwesomeIcon icon="arrow-left" />
+      <i class="fa-solid fa-left-long"></i>
     </button>
 
     <h1>Editar Perfil</h1>
