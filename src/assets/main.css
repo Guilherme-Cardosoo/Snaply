@@ -1,0 +1,24 @@
+@import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:ital,wght@0,1..1000;1,1..1000&display=swap');
+
+.claro {
+  --page: #fff;
+  --text: #000;
+  --elements: #00ff88;
+}
+
+.escuro {
+  --page: #2c2c2c;
+  --text: #fff;
+  --elements: #00ff88;
+}
+
+.dark {
+  --page: #000;
+  --text: #fff;
+  --elements: #fff;
+}
+
+body {
+  background: var(--page);
+}
