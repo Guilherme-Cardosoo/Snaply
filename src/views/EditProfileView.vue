@@ -1,40 +1,3 @@
-<template>
-  <div class="edit-profile-container">
-    <header>
-      <button @click="$router.go(-1)">Cancelar</button>
-      <h1>Editar Perfil</h1>
-      <button @click="saveProfile" :disabled="saving">Salvar</button>
-    </header>
-    <div v-if="loading" class="loading">Carregando perfil...</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
-    <form v-else @submit.prevent="saveProfile" class="edit-form">
-      <div class="field">
-        <label for="profile-picture">Foto de Perfil (opcional):</label>
-        <input 
-          id="profile-picture" 
-          ref="profilePictureInput" 
-          type="file" 
-          accept="image/*" 
-          @change="onFileChange"
-        />
-        <small v-if="profilePictureUrl" class="preview">Preview: <img :src="profilePictureUrl" alt="Preview" style="max-width: 100px; max-height: 100px;" /></small>
-      </div>        
-      <div class="field">
-        <label for="bio">Bio:</label>
-        <textarea 
-          id="bio"
-          v-model="form.bio" 
-          placeholder="Descreva-se em poucas palavras..." 
-          maxlength="500"
-          autocomplete="bio"
-        ></textarea>
-        <small>{{ form.bio.length }}/500</small>
-      </div>
-
-    </form>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -144,77 +107,170 @@ const saveProfile = async () => {
 }
 </script>
 
+<template>
+  <div class="edit-profile-page">
+    <section v-if="loading" class="loading">Carregando...</section>
+    <section v-else-if="error" class="error">{{ error }}</section>
+    <section v-else class="form-section">
+      <div class="image-upload">
+        <div class="profile-wrapper">
+          <img
+            :src="profilePictureUrl || '/default-profile.png'"
+            alt="Foto atual"
+            class="profile-preview"
+          />
+        </div>
+        <label class="upload-btn">
+          Alterar foto
+          <input 
+            ref="profilePictureInput"
+            type="file"
+            accept="image/*"
+            hidden
+            @change="onFileChange"
+          />
+        </label>
+      </div>
+      <label class="label">Nova Bio</label>
+      <textarea
+        v-model="form.bio"
+        maxlength="60"
+        placeholder="Fale um pouco sobre você..."
+      ></textarea>
+      <small class="bio-counter">{{ form.bio.length }}/60</small>
+      <div class="buttons">
+        <button class="cancel-btn" type="button" @click="$router.go(-1)">
+          Cancelar
+        </button>
+        <button class="save-btn" type="submit" @click.prevent="saveProfile" :disabled="saving">
+          Salvar
+        </button>
+      </div>
+    </section>
+  </div>
+</template>
+
 <style scoped>
-.edit-profile-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
+.edit-profile-page {
+  margin-left: 21px;
+  flex-direction: column;
+  align-items: center;
+  padding: 19vh 18px;
+  position: relative;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.loading {
+  margin-top: 0px;
+  color: var(--text-secondary);
 }
-
-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-header button:last-child {
-    background: #28a745;
-}
-
-header button:last-child:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-}
-
-.edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.field {
-    display: flex;
-    flex-direction: column;
-}
-
-.field label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.field textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    min-height: 100px;
-    resize: vertical;
-}
-
-.field small {
-    color: #666;
-    font-size: 0.9em;
-}
-
-.loading,
 .error {
-    text-align: center;
-    padding: 40px;
-    color: #666;
+  margin-top: 50px;
+  color: red;
 }
 
-.error {
-    color: red;
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 290px;
 }
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.profile-wrapper {
+  margin-left: 20px;
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--elements);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-btn {
+  margin-left: 20px;
+  margin-top: 24px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--elements);
+  padding: 9px 19px;
+  border: 1px solid var(--elements);
+  border-radius: 13px;
+}
+
+.label {
+  font-size: 1.2rem;
+  margin-left: 13.5vh;
+  color: var(--elements);
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 13px;
+  border: 1px solid var(--elements);
+  background: var(--page);
+  color: var(--text);
+  min-height: 100px;
+  font-size: 1rem;
+}
+
+textarea::placeholder {
+  color: #999;
+}
+
+textarea:focus {
+  border-color: var(--elements); 
+  outline: none;               
+  box-shadow: none;             
+}
+
+.bio-counter {
+  margin-left: 14px;
+  font-size: 1rem;
+  margin-top: -35px;
+  color: #999;
+}
+
+.buttons {
+  display: flex;
+  margin-left: 33px;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: var(--page);
+  color: #d42929;
+  padding: 13px 20px;
+  border-radius: 13px;
+  border: 1px solid #d42929;
+  font-weight: 600;
+}
+
+.save-btn {
+  background: var(--page);
+  color: #00ff88;
+  padding: 13px 20px;
+  border-radius: 13px;
+  border: 1px solid #00ff88;
+  font-weight: 600;
+}
+
 </style>
+
+

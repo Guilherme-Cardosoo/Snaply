@@ -13,7 +13,7 @@ const routes = [
   { path: '/', redirect: '/feed' },
   { path: '/login', component: LoginView, meta: { hideLayout: true } },
   { path: '/register', component: RegisterView, meta: { hideLayout: true } },
-  { path: '/edit-profile', component: EditProfileView, meta: { requiresAuth: true } },
+  { path: '/edit-profile', component: EditProfileView, meta: { hideLayout: true } },
   { path: '/users', component: UserListView, meta: { requiresAuth: true } },
   { path: '/feed', component: FeedView, meta: { requiresAuth: true } },
   { path: '/profile/:id', component: ProfileView, meta: { requiresAuth: true } },
