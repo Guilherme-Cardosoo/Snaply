@@ -1,37 +1,5 @@
-<template>
-  <div class="user-list-container">
-    <header>
-      <h1>Usuários</h1>
-      <button @click="$router.push('/feed')">Feed</button>
-    </header>
-    <div v-if="loading" class="loading">Carregando usuários...</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
-    <div v-else-if="users.length === 0" class="empty">Nenhum usuário encontrado.</div>
-    <div v-else class="users-list">
-      <router-link v-for="u in users" :key="u.id" :to="`/profile/${u.id}`" class="user-item">
-          <img 
-          v-if="u.profile_picture" 
-          :src="u.profile_picture" 
-          alt="Foto de {{ u.username }}" 
-          class="user-img" 
-          @error="handleImgError"
-          />
-          <img 
-          v-else 
-          src="/static/default-avatar.png" 
-          alt="Avatar Padrão" 
-          class="user-img" 
-          />
-        <h3>{{ u.username }}</h3>
-        <!-- <p>{{ u.bio || 'Sem bio' }}</p> -->
-        <small>{{ u.email }}</small>
-      </router-link>
-    </div>
-  </div>
-</template>
-
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
@@ -42,6 +10,7 @@ const authStore = useAuthStore()
 const users = ref([])
 const loading = ref(true)
 const error = ref('')
+const searchQuery = ref('')
 
 onMounted(async () => {
   if (!authStore.token) {
@@ -55,6 +24,7 @@ const loadUsers = async () => {
   loading.value = true
   error.value = ''
   const API_BASE = import.meta.env.VITE_API_BASE
+
   try {
     const response = await axios.get(`${API_BASE}users/`)
     users.value = response.data
@@ -65,90 +35,154 @@ const loadUsers = async () => {
     loading.value = false
   }
 }
+
+const filteredUsers = computed(() => {
+  if (!searchQuery.value.trim()) return users.value
+  return users.value.filter(u =>
+    u.username.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+const handleImgError = (e) => {
+  e.target.src = '/static/default-avatar.png'
+}
 </script>
 
+<template>
+  <div class="user-list-container">
+    <header>
+      <input
+        v-model="searchQuery"
+        class="search-input"
+        placeholder="Pesquisar usuário..."
+        type="text"
+      />
+    </header>
+    <div v-if="loading" class="loading">Carregando usuários...</div>
+    <div v-else-if="error" class="error">{{ error }}</div>
+    <div v-else-if="filteredUsers.length === 0" class="empty">Nenhum usuário encontrado.</div>
+    <div v-else class="users-list">
+      <router-link
+        v-for="u in filteredUsers"
+        :key="u.id"
+        :to="`/profile/${u.id}`"
+        class="user-item"
+      >
+        <img
+          :src="u.profile_picture || '/static/default-avatar.png'"
+          class="user-img"
+          @error="handleImgError"
+        />
+        <div class="user-info">
+          <div class="username">{{ u.username }}</div>
+
+          <div class="stats-row">
+            <div class="stat">
+              <span class="number">{{ u.posts_count || 0 }}</span>
+              <span class="label">posts</span>
+            </div>
+            <div class="stat">
+              <span class="number">{{ u.followers_count || 0 }}</span>
+              <span class="label">seguidores</span>
+            </div>
+            <div class="stat">
+              <span class="number">{{ u.following_count || 0 }}</span>
+              <span class="label">seguindo</span>
+            </div>
+          </div>
+        </div>
+      </router-link>
+    </div>
+  </div>
+</template>
+
 <style scoped>
-.user-item {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.search-input {
+  width: 90%;
+  padding: 12px 16px;
+  border-radius: 13px;
+  border: 1px solid #c9c9c9;
+  background: var(--page);
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 30px;
 }
 
-.user-item:hover {
-  background-color: #d7dd91;
-  transition: all .5s ease;
+.search-input::placeholder {
+  color: #999;
 }
 
-.user-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.user-link div {
-    flex: 1;
+.search-input:focus {
+  outline: none;
+  border-color: var(--elements);
 }
 
 .user-list-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 25px;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+.user-item {
+  display: flex;
+  gap: 18px;
+  padding: 18px 10px;
+  border-bottom: 1px solid #999;
+  text-decoration: none;
+  color: var(--text);
 }
 
-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
+.user-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
 }
 
-.users-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.user-link h3 {
-    margin: 0 0 5px 0;
+.username {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
-.user-link p {
-    margin: 0 0 5px 0;
-    color: #666;
+.stats-row {
+  display: flex;
+  gap: 20px;
 }
 
-.user-link small {
-    color: #999;
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.number {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
 }
 
 .loading,
 .error,
 .empty {
-    text-align: center;
-    padding: 40px;
-    color: #666;
+  text-align: center;
+  padding: 40px;
+  color: #888;
 }
 
 .error {
-    color: red;
+  color: #ff4d4d;
 }
 </style>

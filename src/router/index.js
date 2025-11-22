@@ -10,7 +10,7 @@ import EditPostView from '@/views/EditPostView.vue'
 import DirectView from '@/views/DirectView.vue'
 
 const routes = [
-  { path: '/', redirect: '/feed' },
+  { path: '/', redirect: '/login' },
   { path: '/login', component: LoginView, meta: { hideLayout: true } },
   { path: '/register', component: RegisterView, meta: { hideLayout: true } },
   { path: '/edit-profile', component: EditProfileView, meta: { hideLayout: true } },
