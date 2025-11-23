@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
@@ -32,6 +32,11 @@ function logout() {
 watch(selectedTheme, (newTheme) => {
   document.body.className = ''
   document.body.classList.add(newTheme)
+})
+
+onMounted(() => {
+  document.body.className = ''
+  document.body.classList.add(selectedTheme.value)
 })
 
 </script>
