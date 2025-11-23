@@ -8,6 +8,7 @@ import UserListView from '@/views/UserListView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import EditPostView from '@/views/EditPostView.vue'
 import DirectView from '@/views/DirectView.vue'
+import DirectChatView from '@/views/DirectChatView.vue'
 
 const routes = [
   { path: '/', redirect: '/login' },
@@ -17,10 +18,10 @@ const routes = [
   { path: '/users', component: UserListView, meta: { requiresAuth: true } },
   { path: '/feed', component: FeedView, meta: { requiresAuth: true } },
   { path: '/profile/:id', component: ProfileView, meta: { requiresAuth: true } },
-  { path: '/post/:id', component: PostView, meta: { requiresAuth: true } },  
-  { path: '/post/:id/edit', component: EditPostView, meta: { requiresAuth: true } },
+  { path: '/post/:id', component: PostView, meta: { hideLayout: true } },  
+  { path: '/post/:id/edit', component: EditPostView, meta: { hideLayout: true } },
   { path: '/directs', component: DirectView, meta: { requiresAuth: true } },
-  { path: '/directs/:id', component: DirectView, meta: { requiresAuth: true } }
+  { path: '/directs/:id', component: DirectChatView, meta: { hideLayout: true } }
 ]
 
 const router = createRouter({

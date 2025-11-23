@@ -33,22 +33,35 @@ export const usePostsStore = defineStore('posts', {
       }
     },
     async likePost(postId) {
-      try {
-        const response = await axios.post(`${API_BASE}posts/${postId}/like/`)
-        const message = response.data.message
-        // ← FIX: Toggle baseado no message do backend
-        const post = this.posts.find(p => p.id === postId)
-        if (post) {
-          if (message === 'Curtiu!') {
-            post.likes_count = (post.likes_count || 0) + 1
-          } else if (message === 'Curtiu cancelada!') {
-            post.likes_count = Math.max(0, (post.likes_count || 0) - 1)
-          }
-        }
-        console.log('Like toggle:', message)
-      } catch (error) {
-        console.error('Erro ao curtir:', error)
-      }
+  try {
+    const response = await axios.post(`${API_BASE}posts/${postId}/like/`)
+    
+    const post = this.posts.find(p => p.id === postId)
+    if (!post) return
+
+    // Caso o backend retorne liked e likes_count diretamente
+    if ('liked' in response.data) {
+      post.liked_by_user = response.data.liked
     }
+
+    if ('likes_count' in response.data) {
+      post.likes_count = response.data.likes_count
+    }
+
+    // Fallback usando sua mensagem, caso o backend NÃO envie liked/likes_count
+    const message = response.data.message
+    if (message === 'Curtiu!') {
+      post.liked_by_user = true
+      post.likes_count = (post.likes_count || 0) + 1
+    } else if (message === 'Curtiu cancelada!') {
+      post.liked_by_user = false
+      post.likes_count = Math.max(0, (post.likes_count || 0) - 1)
+    }
+
+  } catch (error) {
+    console.error('Erro ao curtir:', error)
+  }
+}
+
   }
 })

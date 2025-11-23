@@ -1,23 +1,3 @@
-<template>
-  <div class="edit-post-container">
-    <header>
-      <button @click="$router.go(-1)">Cancelar</button>
-      <h1>Editar Post</h1>
-      <button @click="savePost" :disabled="saving">Salvar Alterações</button>
-    </header>
-    <div v-if="loading" class="loading">Carregando post...</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
-    <form v-else @submit.prevent="savePost" class="edit-form">
-      <textarea 
-        v-model="form.content" 
-        placeholder="Edite o conteúdo do post..." 
-        required 
-        rows="5"
-      ></textarea>
-    </form>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -90,13 +70,85 @@ const savePost = async () => {
 }
 </script>
 
+<template>
+  <div class="edit-post-container">
+    <header>      
+      <h1>Editar Post</h1>      
+    </header>
+    <div v-if="loading" class="loading">Carregando post...</div>
+    <div v-else-if="error" class="error">{{ error }}</div>
+    <form v-else @submit.prevent="savePost" class="edit-form">
+      <textarea 
+        v-model="form.content" 
+        placeholder="Edite o conteúdo do post..." 
+        required 
+        rows="5"
+      ></textarea>
+    </form>
+  </div>
+  <button class="btn-cancel" @click="$router.go(-1)">Cancelar</button>
+  <button class="btn-save" @click="savePost" :disabled="saving">Salvar Alterações</button>
+</template>
+
 <style scoped>
-.edit-post-container { max-width: 600px; margin: 0 auto; padding: 20px; }
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-button { background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
-header button:last-child { background: #28a745; }
-header button:last-child:disabled { background: #ccc; cursor: not-allowed; }
-.edit-form textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; resize: vertical; }
-.loading, .error { text-align: center; padding: 40px; color: #666; }
-.error { color: red; }
+.edit-post-container {
+  max-width: 600px; 
+  margin: 0 auto; 
+  padding: 20px; 
+}
+
+header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  margin-left: 13.5vh;
+  margin-top: 20px; 
+  margin-bottom: 6vh;
+  color: var(--text);
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+button { 
+  background: var(--page);  
+  padding: 8px 20px; 
+  border-radius: 13px;
+  margin-left: 50px; 
+}
+
+.btn-cancel {
+  color: #ec1919;
+  border: 1px solid #ec1919;
+}
+
+.btn-save {
+  color: #0f67cc;
+  border: 1px solid #0f67cc;
+}
+
+.edit-form textarea { 
+  width: 100%; 
+  padding: 10px;
+  background-color: var(--page);
+  color: #fff; 
+  border: 1px solid #c9c9c9; 
+  border-radius: 13px; 
+  box-sizing: border-box; 
+  resize: vertical; 
+}
+
+.edit-form textarea:focus {
+  outline: none;
+  border-color: var(--elements);
+}
+
+.loading, .error { 
+  text-align: center; 
+  padding: 40px; 
+  color: #666; 
+}
+
+.error { 
+  color: red; 
+}
 </style>

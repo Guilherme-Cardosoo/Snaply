@@ -75,7 +75,7 @@ const handleLogin = async () => {
   font-size: 2.3rem;
   font-weight: 800;
   letter-spacing: 8px;
-  background: #00ff88;
+  background: var(--elements);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
@@ -87,7 +87,7 @@ const handleLogin = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #fff;
+  background-color: var(--page);
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
 }
@@ -106,7 +106,7 @@ input {
   padding: 14px;
   border-radius: 13px;
   border: 2px solid #c9c9c9;
-  color: #000;
+  color: var(--text);
   font-size: 1rem;
   transition: all 0.2s ease;
   box-sizing: border-box;
@@ -117,18 +117,18 @@ input::placeholder {
 }
 
 input:focus {
-  border-color: #00ff88;
+  border-color: var(--elements);
   outline: none;
 }
 
 .signup-link {
   font-size: 0.95rem;
   text-align: center;
-  color: #000;
+  color: var(--text);
 }
 
 .signup-link a {
-  color: #00ff88;
+  color: var(--elements);
   text-decoration: none;
   font-weight: 600;
   margin-left: 4px;
@@ -137,8 +137,8 @@ input:focus {
 button {
   width: 100%;
   padding: 14px;
-  background: #00ff88;
-  color: #fff;
+  background: var(--elements);
+  color: var(--text2);
   border: none;
   border-radius: 13px;
   font-size: 1.5rem;
@@ -155,7 +155,6 @@ button {
   width: 18px;
   height: 18px;
   border: 4px solid #000;
-  border-top-color: var(--base-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto;
@@ -167,7 +166,7 @@ button {
 }
 
 .password-wrapper input {
-  padding-right: 45px; /* espaço para o botão */
+  padding-right: 45px;
 }
 
 .toggle-password-icon {

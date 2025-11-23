@@ -138,7 +138,7 @@ const handleRegister = async () => {
   font-size: 2.3rem;
   font-weight: 800;
   letter-spacing: 8px;
-  background: #00ff88;
+  background: var(--elements);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
@@ -150,7 +150,7 @@ const handleRegister = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #fff;
+  background-color: var(--page);
   font-family: 'Poppins', sans-serif;
 }
 
@@ -168,13 +168,13 @@ input {
   padding: 14px;
   border-radius: 13px;
   border: 2px solid #c9c9c9;
-  color: #000;
+  color: var(--text);
   font-size: 1rem;
   transition: all 0.2s ease;
 }
 
 input:focus {
-  border-color: #00ff88;
+  border-color: var(--elements);
   outline: none;
 }
 
@@ -200,8 +200,8 @@ input:focus {
 button {
   width: 100%;
   padding: 14px;
-  background: #00ff88;
-  color: #fff;
+  background: var(--elements);
+  color: var(--text2);
   border: none;
   border-radius: 13px;
   font-size: 1.5rem;
@@ -221,7 +221,7 @@ button {
 }
 
 .signup-link a {
-  color: #00ff88;
+  color: var(--elements);
   font-weight: 600;
   text-decoration: none;
 }

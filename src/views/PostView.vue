@@ -1,38 +1,3 @@
-<template>
-  <div class="post-detail-container">
-    <button @click="$router.go(-1)">Voltar</button>
-    <div v-if="loading" class="loading">Carregando post...</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
-    <div v-else-if="!post" class="not-found">Post não encontrado!</div>
-    <div v-else class="post-detail">
-      <div class="post-header">
-        <h2>{{ post.author.username }}</h2>
-        <p class="post-content">{{ post.content }}</p>
-        <small>{{ formatDate(post.created_at) }}</small>
-      </div>
-      <div class="post-actions">
-        <button @click="likePost" class="like-btn">❤️ {{ post.likes_count || 0 }}</button>
-        <template v-if="post.author.id === authStore.user.id">
-          <button @click="$router.push(`/post/${post.id}/edit`)" class="edit-btn">Editar</button>
-          <button @click="deletePost(post.id)" class="delete-btn">Deletar</button>
-        </template>
-      </div>
-      <h3>Comentários ({{ comments.length }})</h3>
-      <div v-if="comments.length === 0" class="empty-comments">Nenhum comentário ainda. Seja o primeiro!</div>
-      <div v-else class="comments-list">
-        <div v-for="comment in comments" :key="comment.id" class="comment-item">
-          <strong>{{ comment.author.username }}:</strong> {{ comment.content }}
-          <small>{{ formatDate(comment.created_at) }}</small>
-        </div>
-      </div>
-      <form @submit.prevent="addComment" class="comment-form">
-        <textarea v-model="newComment" placeholder="Adicione um comentário..." required></textarea>
-        <button type="submit" :disabled="submitting">Comentar</button>
-      </form>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -122,18 +87,201 @@ const deletePost = async (id) => {
 const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('pt-BR')
 </script>
 
+<template>
+  <div class="post-detail-container">
+    <button @click="$router.go(-1)" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <div v-if="loading" class="loading">Carregando post...</div>
+    <div v-else-if="error" class="error">{{ error }}</div>
+    <div v-else-if="!post" class="not-found">Post não encontrado!</div>
+    <div v-else class="post-detail">
+      <div class="post-header">
+        <div class="post-top">
+          <h2 class="post-user">{{ post.author.username }}</h2>
+          <small class="post-date">{{ formatDate(post.created_at) }}</small>
+        </div>
+        <p class="post-content">{{ post.content }}</p>
+      </div>
+      <div class="post-actions">
+        <button @click="likePost" class="icon-btn">
+          <i class="fas fa-heart"></i>
+          <span>{{ post.likes_count || 0 }}</span>
+        </button>
+          <button class="icon-btn icon2">
+            <i class="far fa-comment"></i>
+            <span>{{ comments.length }}</span>
+          </button>
+        <button 
+          v-if="post.author.id === authStore.user.id" 
+          @click="$router.push(`/post/${post.id}/edit`)" 
+          class="icon-btn icon2"
+        >
+          <i class="far fa-edit"></i>
+        </button>
+        <button 
+          v-if="post.author.id === authStore.user.id" 
+          @click="deletePost(post.id)" 
+          class="icon-btn delete"
+        >
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </div>
+      <form @submit.prevent="addComment" class="comment-form">
+        <textarea v-model="newComment" placeholder="Adicione um comentário..." required></textarea>
+        <button type="submit" :disabled="submitting">Comentar</button>
+      </form>
+      <div v-if="comments.length === 0" class="empty-comments">Nenhum comentário ainda. Seja o primeiro!</div>
+      <div v-else class="comments-list">
+        <div v-for="comment in comments" :key="comment.id" class="comment-item">
+          <div class="comment-top">
+            <strong class="comment-user">{{ comment.author.username }}</strong>
+            <small class="comment-date">{{ formatDate(comment.created_at) }}</small>
+          </div>
+          <p class="comment-content">
+            {{ comment.content }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style scoped>
-.edit-btn { background: #ffc107}
-.post-detail-container { max-width: 600px; margin: 0 auto; padding: 20px; }
-button { background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-bottom: 20px; }
-.post-header { border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
-.post-content { font-size: 1.2em; line-height: 1.4; }
-.post-actions { display: flex; gap: 10px; margin: 10px 0; }
-.like-btn { background: none; border: none; font-size: 1.2em; cursor: pointer; }
-.comments-list { margin: 20px 0; }
-.comment-item { border-left: 2px solid #ccc; padding-left: 10px; margin: 10px 0; }
-.comment-form textarea { width: 100%; min-height: 60px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; }
-.comment-form button { background: #28a745; color: white; border: none; padding: 10px; margin-top: 10px; cursor: pointer; }
-.loading, .error, .not-found, .empty-comments { text-align: center; padding: 40px; color: #666; }
-.error { color: red; }
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--elements);
+  font-size: 1.7rem;
+  padding: 20px;
+  margin-bottom: 60px;
+}
+
+.post-header {
+  color: var(--text);
+}
+
+.post-detail {
+  padding: 0 20px;
+}
+
+.post-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-user {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.post-date {
+  font-size: 0.9rem;
+}
+
+.post-content {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7vh;
+  margin-top: 4vh;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #c9c9c9;
+  padding-bottom: 15px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #ec1919;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon2 {
+  color: #999;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.comment-form textarea {
+  min-height: 90px;
+  border: 1px solid #c9c9c9;
+  border-radius: 13px;
+  padding: 12px;
+  resize: vertical;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--page);
+  outline: none;
+}
+
+.comment-form textarea:focus {
+  border-color: var(--elements);
+}
+
+.comment-form button {
+  align-self: flex-end;
+  background: var(--page);
+  color: var(--elements);
+  border: 1px solid var(--elements);
+  border-radius: 13px;
+  font-size: 1.1rem;
+  height: 30px;
+}
+
+.comment-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #c9c9c9;
+  color: var(--text);
+}
+
+.comment-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-user {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.comment-date {
+  font-size: 0.9rem;
+}
+
+.comment-content {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.loading, 
+.error, 
+.not-found, 
+.empty-comments { 
+  text-align: center; 
+  padding: 40px; 
+  color: #666; 
+}
+
+.error { 
+  color: red; 
+}
 </style>

@@ -226,10 +226,11 @@ const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('pt-BR')
           <div class="post-actions">
             <button @click="likePost(post.id)" class="icon-btn">
               <i 
-              :class="[
-                post.liked_by_user ? 'fas fa-heart liked heart-pop' : 'far fa-heart'
-              ]"
+                :class="[
+                  post.liked_by_user ? 'fas fa-heart liked heart-pop' : 'far fa-heart'
+                ]"
               ></i>
+              <span>{{ post.likes_count || 0 }}</span>
             </button>
             <button @click="$router.push(`/post/${post.id}`)" class="icon-btn">
               <i class="far fa-comment"></i>
