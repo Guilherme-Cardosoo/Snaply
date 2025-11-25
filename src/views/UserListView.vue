@@ -65,14 +65,14 @@ const handleImgError = (e) => {
       <router-link
         v-for="u in filteredUsers"
         :key="u.id"
-        :to="`/profile/${u.id}`"
+        :to="`/profile/${u.id}`" || "/static/default-avatar.png"
         class="user-item"
       >
-        <img
+      <!--  <img
           v-else
           src="/static/default-avatar.png"
           class="avatar"
-        />
+        /> -->
         <div class="user-info">
           <div class="username">{{ u.username }}</div>
 
