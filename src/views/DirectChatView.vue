@@ -185,7 +185,7 @@ const sendMessage = async () => {
 
 .sent {
   background: var(--elements);
-  color: var(--text);
+  color: var(--text2);
   margin-left: auto;
 }
 
@@ -206,6 +206,8 @@ const sendMessage = async () => {
   padding: 12px;
   border-top: 1px solid #c9c9c9;
   background: var(--page);
+  overflow: hidden;
+  touch-action: none;
 }
 
 .chat-input input {
@@ -216,10 +218,12 @@ const sendMessage = async () => {
   background: var(--page);
   color: var(--text);
   outline: none;
+
 }
 
 .chat-input input:focus {
   border-color: var(--elements);
+
 }
 
 .send-btn {
@@ -228,7 +232,7 @@ const sendMessage = async () => {
   background: var(--elements);
   border: none;
   border-radius: 13px;
-  color: var(--text);
+  color: var(--text2);
 }
 
 .send-btn:disabled {

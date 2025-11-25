@@ -27,4 +27,6 @@
 body {
   background: var(--page);
   font-family: 'Poppins', sans-serif;
+  padding-bottom: 50px;
+  height: 100%;
 }

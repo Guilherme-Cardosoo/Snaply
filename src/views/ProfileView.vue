@@ -9,13 +9,16 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 const postsStore = usePostsStore()
-
 const userId = route.params.id
 const user = ref(null)
 const userPosts = ref([])
 const loading = ref(true)
 const error = ref('')
 const isFollowing = ref(false)
+
+const getCommentsCount = (post) => {
+  return post.comments ? post.comments.length : 0;
+};
 
 const handleImgError = (e) => {
   e.target.src = '/static/default-avatar.png'
@@ -230,10 +233,10 @@ const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('pt-BR')
                   post.liked_by_user ? 'fas fa-heart liked heart-pop' : 'far fa-heart'
                 ]"
               ></i>
-              <span>{{ post.likes_count || 0 }}</span>
             </button>
-            <button @click="$router.push(`/post/${post.id}`)" class="icon-btn">
+            <button @click="$router.push(`/post/${post.id}`)" class="icon-btn comment-btn">
               <i class="far fa-comment"></i>
+              <span class="comment-count">{{ getCommentsCount(post) }}</span>
             </button>
             <template v-if="post.author?.id === authStore.user?.id">
               <button @click="$router.push(`/post/${post.id}/edit`)" class="icon-btn">
@@ -361,6 +364,17 @@ button {
 
 .icon-btn .liked {
   color: #ec1919;
+}
+
+.comment-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comment-count {
+  font-size: 1.1rem;
+  color: #999;
 }
 
 .delete i {

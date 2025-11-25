@@ -130,7 +130,7 @@ button {
   width: 100%; 
   padding: 10px;
   background-color: var(--page);
-  color: #fff; 
+  color: var(--text); 
   border: 1px solid #c9c9c9; 
   border-radius: 13px; 
   box-sizing: border-box; 

@@ -90,7 +90,6 @@ const openChat = async (userId) => {
           src="/static/default-avatar.png"
           class="avatar"
         />
-
         <span class="username">{{ user.username }}</span>
       </div>
     </div>

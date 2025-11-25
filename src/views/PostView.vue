@@ -51,7 +51,18 @@ const loadPost = async () => {
   }
 }
 
-const likePost = () => postsStore.likePost(postId)
+const likePost = async () => {
+  await postsStore.likePost(postId)
+
+  // Atualiza o post local para refletir a mudança
+  post.value.liked_by_user = !post.value.liked_by_user
+  if (post.value.liked_by_user) {
+    post.value.likes_count++
+  } else {
+    post.value.likes_count--
+  }
+}
+
 
 const addComment = async () => {
   if (!newComment.value.trim()) return
@@ -105,17 +116,17 @@ const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('pt-BR')
       </div>
       <div class="post-actions">
         <button @click="likePost" class="icon-btn">
-          <i class="fas fa-heart"></i>
+          <i :class="[post.liked_by_user ? 'fas fa-heart liked heart-pop' : 'far fa-heart']"></i>
           <span>{{ post.likes_count || 0 }}</span>
         </button>
-          <button class="icon-btn icon2">
+          <button class="icon-btn">
             <i class="far fa-comment"></i>
             <span>{{ comments.length }}</span>
           </button>
         <button 
           v-if="post.author.id === authStore.user.id" 
           @click="$router.push(`/post/${post.id}/edit`)" 
-          class="icon-btn icon2"
+          class="icon-btn"
         >
           <i class="far fa-edit"></i>
         </button>
@@ -201,15 +212,30 @@ const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('pt-BR')
 .icon-btn {
   background: none;
   border: none;
-  color: #ec1919;
+  color: #999;
   font-size: 1.3rem;
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.icon2 {
-  color: #999;
+.liked {
+  color: #ec1919;
+}
+
+.heart-pop {
+  animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+
+.delete {
+  color: #ec1919;
 }
 
 .comment-form {

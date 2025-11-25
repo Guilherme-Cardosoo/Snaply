@@ -9,7 +9,7 @@ const router = useRouter()
 const postsStore = usePostsStore()
 const authStore = useAuthStore()
 const newPostContent = ref('')
-const deletingId = ref(null)  // Para disable durante delete
+const deletingId = ref(null)
 
 onMounted(async () => {
   if (!authStore.token) {
@@ -105,8 +105,9 @@ const handleImgError = (event) => {
                 ]"
               ></i>
             </button>
-            <button @click="$router.push(`/post/${post.id}`)" class="icon-btn">
+            <button @click="$router.push(`/post/${post.id}`)" class="icon-btn comment-btn">
               <i class="far fa-comment"></i>
+              <span class="comment-count">{{ getCommentsCount(post) }}</span>
             </button>
             <template v-if="post.author?.id === authStore.user?.id">
               <button @click="$router.push(`/post/${post.id}/edit`)" class="icon-btn">
@@ -136,7 +137,6 @@ const handleImgError = (event) => {
   color: var(--text);
 }
 
-/* Agrupa foto + nome + data */
 .post-user-info {
   display: flex;
   align-items: center;
@@ -220,11 +220,9 @@ header {
     border-radius: 13px;
     padding: 10px;
     margin-left: 33vh;
-    margin-top: 10px;
+    margin-top: 25px;
     margin-bottom: 10px;
 }
-
-/* ------------------------------------------------------------ */
 
 .post-card {
   border: 1px solid #999;
@@ -259,6 +257,17 @@ header {
 
 .icon-btn .liked {
   color: #ec1919;
+}
+
+.comment-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comment-count {
+  font-size: 1.1rem;
+  color: #999;
 }
 
 .delete i {
