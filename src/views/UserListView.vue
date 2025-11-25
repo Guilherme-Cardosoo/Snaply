@@ -69,9 +69,9 @@ const handleImgError = (e) => {
         class="user-item"
       >
         <img
-          :src="u.profile_picture || '/static/default-avatar.png'"
-          class="user-img"
-          @error="handleImgError"
+          v-else
+          src="/static/default-avatar.png"
+          class="avatar"
         />
         <div class="user-info">
           <div class="username">{{ u.username }}</div>
