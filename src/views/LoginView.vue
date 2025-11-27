@@ -61,16 +61,12 @@ const handleLogin = async () => {
       </p>
       <button type="submit">Entrar</button>
       <div v-if="loading" class="spinner"></div>
-      <p v-if="loading" class="text-gray-600 text-center max-w-sm">
-        ⏳ O servidor está iniciando... isso pode levar até <strong>2 minutos</strong> no primeiro acesso.
-      </p>
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
 </template>
 
 <style scoped>
-
 .social-logo {
   font-size: 2.3rem;
   font-weight: 800;
@@ -86,10 +82,9 @@ const handleLogin = async () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: var(--page);
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
+  height: 100vh;
 }
 
 form {
@@ -106,7 +101,7 @@ input {
   padding: 14px;
   border-radius: 13px;
   border: 2px solid #c9c9c9;
-  color: var(--text);
+  color: var(--darktext);
   font-size: 1rem;
   transition: all 0.2s ease;
   box-sizing: border-box;
@@ -138,7 +133,7 @@ button {
   width: 100%;
   padding: 14px;
   background: var(--elements);
-  color: var(--text2);
+  color: var(--messagetext);
   border: none;
   border-radius: 13px;
   font-size: 1.5rem;
@@ -152,12 +147,12 @@ button {
 }
 
 .spinner {
-  width: 18px;
-  height: 18px;
-  border: 4px solid #000;
+  width: 30px;
+  height: 30px;
+  border: 4px solid var(--elements);
+  border-top-color: transparent;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
+  animation: spin 0.8s linear infinite;
 }
 
 .password-wrapper {
@@ -184,5 +179,5 @@ button {
     transform: rotate(360deg);
   }
 }
-
 </style>
+

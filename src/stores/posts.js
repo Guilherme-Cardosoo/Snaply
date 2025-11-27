@@ -27,7 +27,7 @@ export const usePostsStore = defineStore('posts', {
     async createPost(content) {
       try {
         const response = await axios.post(`${API_BASE}posts/`, { content })
-        this.posts.unshift(response.data) // Adiciona no topo do feed
+        this.posts.unshift(response.data)
       } catch (error) {
         console.error('Erro ao criar post:', error)
       }
@@ -39,7 +39,6 @@ export const usePostsStore = defineStore('posts', {
     const post = this.posts.find(p => p.id === postId)
     if (!post) return
 
-    // Caso o backend retorne liked e likes_count diretamente
     if ('liked' in response.data) {
       post.liked_by_user = response.data.liked
     }
@@ -48,7 +47,6 @@ export const usePostsStore = defineStore('posts', {
       post.likes_count = response.data.likes_count
     }
 
-    // Fallback usando sua mensagem, caso o backend NÃO envie liked/likes_count
     const message = response.data.message
     if (message === 'Curtiu!') {
       post.liked_by_user = true

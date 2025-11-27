@@ -185,7 +185,7 @@ const sendMessage = async () => {
 
 .sent {
   background: var(--elements);
-  color: var(--text2);
+  color: var(--messagetext);
   margin-left: auto;
 }
 
@@ -232,7 +232,7 @@ const sendMessage = async () => {
   background: var(--elements);
   border: none;
   border-radius: 13px;
-  color: var(--text2);
+  color: var(--messagetext);
 }
 
 .send-btn:disabled {

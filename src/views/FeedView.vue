@@ -90,8 +90,8 @@ const handleImgError = (event) => {
                   class="author-img"
                 />
                 <div class="user-text">
-                  <h3>{{ post.author?.username || 'Usuário desconhecido' }}</h3>
-                  <small>{{ formatDate(post.created_at) }}</small>
+                  <h3 class="username">{{ post.author?.username || 'Usuário desconhecido' }}</h3>
+                  <small class="post-date">{{ formatDate(post.created_at) }}</small>
                 </div>
               </div>
             </div>
@@ -139,21 +139,17 @@ const handleImgError = (event) => {
 
 .post-user-info {
   display: flex;
-  align-items: center;
   gap: 10px;
 }
 
 .user-text {
   display: flex;
-  flex-direction: row;
+  flex-direction: space-between;
   align-items: center;
-  gap: 15vh;
 }
 
-.user-text h3,
-.user-text small {
-  margin: 0;
-  font-size: 1rem;
+.post-date {
+  margin-left: 14vh;
 }
 
 .author-img {

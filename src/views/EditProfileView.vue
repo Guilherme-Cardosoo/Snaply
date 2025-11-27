@@ -72,7 +72,6 @@ const saveProfile = async () => {
       formData.append('profile_picture', profilePictureFile.value) 
     }
     
-    // Debug: Log FormData contents
     console.log('Enviando FormData:', { bio: formData.get('bio'), hasFile: !!profilePictureFile.value })
     
     const response = await axios.patch(`${API_BASE}users/me/`, formData, {

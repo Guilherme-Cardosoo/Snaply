@@ -30,7 +30,6 @@ export const useAuthStore = defineStore('auth', {
           console.log('Auth restaurado no reload:', this.user)
         } catch (error) {
           console.error('Erro ao restaurar user:', error)
-          // Se falhar (token inválido), logout auto
           this.logout()
         }
       }

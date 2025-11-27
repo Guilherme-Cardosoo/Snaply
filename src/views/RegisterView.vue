@@ -20,7 +20,6 @@ const registering = ref(false)
 
 const API_BASE = import.meta.env.VITE_API_BASE
 
-// variáveis separadas para os ícones
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 
@@ -51,7 +50,6 @@ const handleRegister = async () => {
 
     if (response) loading.value = false
 
-    // login automático
     await authStore.login({
       username: credentials.value.username,
       password: credentials.value.password
@@ -168,7 +166,7 @@ input {
   padding: 14px;
   border-radius: 13px;
   border: 2px solid #c9c9c9;
-  color: var(--text);
+  color: var(--darktext);
   font-size: 1rem;
   transition: all 0.2s ease;
 }
@@ -201,7 +199,7 @@ button {
   width: 100%;
   padding: 14px;
   background: var(--elements);
-  color: var(--text2);
+  color: var(--messagetext);
   border: none;
   border-radius: 13px;
   font-size: 1.5rem;
@@ -217,7 +215,7 @@ button {
 .signup-link {
   font-size: 0.95rem;
   text-align: center;
-  color: #000;
+  color: var(--text);
 }
 
 .signup-link a {

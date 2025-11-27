@@ -1,13 +1,15 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { useThemeStore } from '@/stores/theme'   // <-- NOVO
 
 const showMenu = ref(false)
 const menuScreen = ref('main')
-const selectedTheme = ref('claro')
+
 const authStore = useAuthStore()
 const router = useRouter()
+const themeStore = useThemeStore()               // <-- NOVO
 
 function toggleMenu() {
   showMenu.value = !showMenu.value
@@ -29,46 +31,49 @@ function logout() {
   router.push('/login')
 }
 
-watch(selectedTheme, (newTheme) => {
-  document.body.className = ''
-  document.body.classList.add(newTheme)
-})
-
-onMounted(() => {
-  document.body.className = ''
-  document.body.classList.add(selectedTheme.value)
-})
-
+function selectTheme(theme) {                    // <-- NOVO
+  themeStore.setTheme(theme)
+}
 </script>
 
 <template>
   <div class="header">
     <h1 class="logo">SNAPLY</h1>
+
     <button class="menu-btn" @click="toggleMenu">
       <i class="fa-solid fa-bars"></i>
     </button>
-    <div
-    v-if="showMenu"
-    class="overlay"
-    @click="toggleMenu"
+
+    <div 
+      v-if="showMenu" 
+      class="overlay" 
+      @click="toggleMenu"
     ></div>
+
     <nav :class="['side-menu', { open: showMenu }]">
+      
+      <!-- TELA PRINCIPAL DO MENU -->
       <ul v-if="menuScreen === 'main'">
         <li @click="goToThemes" class="clickable">Temas</li>
         <li @click="logout" class="clickable">Sair</li>
       </ul>
+
+      <!-- TELA DE TEMAS -->
       <ul v-if="menuScreen === 'themes'">
         <li @click="goBack" class="back">Voltar</li>
-        <li class="theme-item" @click="selectedTheme = 'claro'">
-          <span class="dot" :class="{ active: selectedTheme === 'claro' }"></span>
+
+        <li class="theme-item" @click="selectTheme('claro')">
+          <span class="dot" :class="{ active: themeStore.theme === 'claro' }"></span>
           Claro
         </li>
-        <li class="theme-item" @click="selectedTheme = 'escuro'">
-          <span class="dot" :class="{ active: selectedTheme === 'escuro' }"></span>
+
+        <li class="theme-item" @click="selectTheme('escuro')">
+          <span class="dot" :class="{ active: themeStore.theme === 'escuro' }"></span>
           Escuro
         </li>
-        <li class="theme-item" @click="selectedTheme = 'dark'">
-          <span class="dot" :class="{ active: selectedTheme === 'dark' }"></span>
+
+        <li class="theme-item" @click="selectTheme('dark')">
+          <span class="dot" :class="{ active: themeStore.theme === 'dark' }"></span>
           Dark
         </li>
       </ul>
@@ -107,6 +112,7 @@ onMounted(() => {
   color: var(--elements);
   font-size: 2.1rem;
   cursor: pointer;
+  z-index: 1000000;
 }
 
 .overlay {
@@ -134,7 +140,7 @@ onMounted(() => {
 }
 
 .side-menu.open {
-  right: 0; 
+  right: 0;
 }
 
 .side-menu ul {
@@ -145,10 +151,6 @@ onMounted(() => {
   font-size: 1.6rem;
   color: var(--elements);
   padding: 1rem 0;
-}
-
-.menu-btn {
-  z-index: 1000000;
 }
 
 .back {
@@ -174,5 +176,4 @@ onMounted(() => {
 .dot.active {
   background: var(--elements);
 }
-
 </style>

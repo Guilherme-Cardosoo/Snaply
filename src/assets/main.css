@@ -6,27 +6,33 @@
 .claro {
   --page: #fff;
   --text: #000;
-  --text2: #fff;
+  --darktext: #000;
   --elements: #6b07bd;
+  --messagetext: #fff;
 }
 
 .escuro {
   --page: #2c2c2c;
   --text: #fff;
-  --text2: #000;
+  --darktext: #000;
   --elements: #6b07bd;
+  --messagetext: #fff;
 }
 
 .dark {
   --page: #000;
   --text: #fff;
-  --text2: #000;
+  --darktext: #000;
   --elements: #fff;
+  --messagetext: #000;
 }
 
 body {
   background: var(--page);
   font-family: 'Poppins', sans-serif;
-  padding-bottom: 50px;
-  height: 100%;
+  margin-bottom: 50px;
+}
+
+.no-scroll {
+  overflow: hidden;
 }

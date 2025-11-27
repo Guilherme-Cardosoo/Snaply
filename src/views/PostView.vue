@@ -54,7 +54,6 @@ const loadPost = async () => {
 const likePost = async () => {
   await postsStore.likePost(postId)
 
-  // Atualiza o post local para refletir a mudança
   post.value.liked_by_user = !post.value.liked_by_user
   if (post.value.liked_by_user) {
     post.value.likes_count++
