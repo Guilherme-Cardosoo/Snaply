@@ -260,7 +260,6 @@ const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString('pt-BR')
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 10px;
-  border: 2px solid var(--elements);
 }
 
 .profile-container {
