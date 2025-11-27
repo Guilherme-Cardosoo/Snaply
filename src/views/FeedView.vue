@@ -150,6 +150,7 @@ const handleImgError = (event) => {
 
 .post-date {
   margin-left: 14vh;
+  position: absolute;
 }
 
 .author-img {
