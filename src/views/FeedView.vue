@@ -149,7 +149,7 @@ const handleImgError = (event) => {
 }
 
 .post-date {
-  margin-left: 14vh;
+  margin-left: 22vh;
   position: absolute;
 }
 
