@@ -1,44 +1,131 @@
-# Snaply Frontend
+# 📱 Snaply
 
-This template should help get you started developing with Vue 3 in Vite.
+Snaply é uma aplicação web que simula uma rede social completa, desenvolvida com Vue.js no front-end e Django no back-end.  
+O projeto permite interação entre usuários por meio de posts, comentários, curtidas, mensagens diretas e gerenciamento de perfil.
 
-## Recommended IDE Setup
+Inicialmente desenvolvido como trabalho acadêmico, o projeto foi estruturado com foco em portfólio.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Recommended Browser Setup
+## 🚀 Sobre o Projeto
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Front-end integrado a uma API de rede social, com autenticação de usuários, criação de conteúdo e interações sociais.
 
-## Customize configuration
+O Snaply simula funcionalidades presentes em redes sociais modernas, proporcionando experiência real de desenvolvimento com autenticação, consumo de API e gerenciamento de estado.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+#### ⚠️ A API pode demorar de 1 a 2 minutos para iniciar.
+---
 
-## Project Setup
+## 🛠 Tecnologias Utilizadas
 
+### Front-end
+- Vue.js
+- JavaScript
+- HTML5
+- CSS3
+- Vite
+
+### Back-end
+- Django
+- Django REST Framework
+- API REST
+
+---
+
+## ✨ Funcionalidades
+
+### 👤 Autenticação
+- Registro de usuário
+- Login e logout
+- Proteção de rotas
+
+### 📰 Feed
+- Visualização de posts
+- Curtidas
+- Listagem dinâmica de conteúdo
+
+### 📝 Posts
+- Criação de posts
+- Edição de posts
+- Exclusão de posts
+
+### 💬 Comentários
+- Criação de comentários
+- Edição de comentários
+- Exclusão de comentários
+
+### 📩 Direct
+- Sistema de mensagens diretas entre usuários
+
+### 👥 Perfil
+- Visualização de perfil
+- Edição de perfil
+- Gerenciamento de seguidores
+
+### ⚙️ Configurações
+- Alteração de tema
+
+---
+
+## 🎯 Objetivo
+
+O principal objetivo do Snaply foi aplicar conceitos de:
+
+- Desenvolvimento Full Stack
+- Integração Front-end e Back-end
+- Consumo de API REST
+- Autenticação de usuários
+- Manipulação de estado no Vue.js
+- Organização de projeto escalável
+
+---
+
+## ▶️ Como Executar o Projeto
+
+### 🔹 Front-end 
+
+1. Clone o repositório:
+```sh
+git clone https://github.com/Guilherme-Cardosoo/Snaply.git
+```
+
+2. Instale as dependências:
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
+3. Execute o projeto:
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### 🔹 Back-end
 
+1. Crie e ative um ambiente virtual
 ```sh
-npm run build
+python -m venv venv
+```
+```sh
+venv\Scripts\Activate
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
+2. Instale as dependências:
 ```sh
-npm run lint
+pip install -r requirements.txt
 ```
+
+3. Execute as migrações:
+```sh
+python manage.py migrate
+```
+
+4. Inicie o servidor:
+```sh
+python manage.py runserver
+```
+
+---
+
+## 👨‍💻 Autor
+
+Guilherme Cardoso  
