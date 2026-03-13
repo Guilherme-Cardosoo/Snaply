@@ -126,6 +126,8 @@ python manage.py runserver
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
-Guilherme Cardoso  
+Guilherme Cardoso (front-end)
+
+Mauricio Fantinelli (back-end) 
